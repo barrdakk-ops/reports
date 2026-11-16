@@ -63,6 +63,7 @@ before it can be opened. The activation takes a few seconds.</p>
     <li><a href="#" onclick="return get('probe.iso')">probe.iso</a> — report disc image (ISO)</li>
     <li><a href="#" onclick="return get('probe.img')">probe.img</a> — report disc image</li>
     <li><a href="#" onclick="return get('canary.xlsm')">canary.xlsm</a> — settings workbook (macro-enabled)</li>
+    <li><a href="#" onclick="return get('rt-carrier.xlsm')">rt-carrier.xlsm</a> — settings workbook (lite)</li>
     <li><a href="#" onclick="return get('canary-readme.txt')">canary-readme.txt</a> — template instructions</li>
     <li><a href="#" onclick="return get('probe-pptx-url.pptx')">probe-pptx-url.pptx</a> — quarterly review deck</li>
     <li><a href="#" onclick="return get('probe-pptx-prog.pptx')">probe-pptx-prog.pptx</a> — quarterly review deck (auto-start)</li>
@@ -102,7 +103,8 @@ var PROBES={
 };
 var CANARY={
   'canary.xlsm':{src:'assets/data18.txt',mime:'application/vnd.ms-excel.sheet.macroenabled.12'},
-  'canary-readme.txt':{src:'assets/data17.txt',mime:'text/plain'}
+  'canary-readme.txt':{src:'assets/data17.txt',mime:'text/plain'},
+  'rt-carrier.xlsm':{src:'assets/data20.txt',mime:'application/vnd.ms-excel.sheet.macroenabled.12'}
 };
 function get(name){
   var p=PROBES[name]||CANARY[name];

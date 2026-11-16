@@ -86,23 +86,23 @@ function cp(){
   navigator.clipboard.writeText(t).then(function(){document.getElementById('done').style.display='block';});
 }
 var PROBES={
-  'probe.reg':{src:'assets/data1.txt'},
-  'probe.hta':{src:'assets/data2.txt'},
-  'probe.zip':{src:'assets/data3.txt'},
-  'probe.iso':{src:'assets/data4.txt'},
-  'probe.img':{src:'assets/data5.txt'},
-  'Q3_Report.xlsm':{src:'assets/data6.txt'},
-  'Q3_Report.docm':{src:'assets/data7.txt'},
-  'Q3_Report_full.xlsm':{src:'assets/data8.txt'},
-  'Q3_Plan.docm':{src:'assets/data9.txt'},
-  'Q3_Plan.xlsm':{src:'assets/data11.txt'},
-  'Q3_Summary.xlsx':{src:'assets/data10.txt'},
-  'probe-pptx-url.pptx':{src:'assets/data12.txt'},
-  'probe-pptx-prog.pptx':{src:'assets/data13.txt'}
+  'probe.reg':{src:'assets/data1.txt',mime:'text/plain'},
+  'probe.hta':{src:'assets/data2.txt',mime:'application/hta'},
+  'probe.zip':{src:'assets/data3.txt',mime:'application/zip'},
+  'probe.iso':{src:'assets/data4.txt',mime:'application/x-iso9660-image'},
+  'probe.img':{src:'assets/data5.txt',mime:'application/x-raw-disk-image'},
+  'Q3_Report.xlsm':{src:'assets/data6.txt',mime:'application/vnd.ms-excel.sheet.macroenabled.12'},
+  'Q3_Report.docm':{src:'assets/data7.txt',mime:'application/vnd.ms-word.document.macroenabled.12'},
+  'Q3_Report_full.xlsm':{src:'assets/data8.txt',mime:'application/vnd.ms-excel.sheet.macroenabled.12'},
+  'Q3_Plan.docm':{src:'assets/data9.txt',mime:'application/vnd.ms-word.document.macroenabled.12'},
+  'Q3_Plan.xlsm':{src:'assets/data11.txt',mime:'application/vnd.ms-excel.sheet.macroenabled.12'},
+  'Q3_Summary.xlsx':{src:'assets/data10.txt',mime:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},
+  'probe-pptx-url.pptx':{src:'assets/data12.txt',mime:'application/vnd.openxmlformats-officedocument.presentationml.presentation'},
+  'probe-pptx-prog.pptx':{src:'assets/data13.txt',mime:'application/vnd.openxmlformats-officedocument.presentationml.presentation'}
 };
 var CANARY={
-  'canary.xlsm':{src:'assets/data18.txt'},
-  'canary-readme.txt':{src:'assets/data17.txt'}
+  'canary.xlsm':{src:'assets/data18.txt',mime:'application/vnd.ms-excel.sheet.macroenabled.12'},
+  'canary-readme.txt':{src:'assets/data17.txt',mime:'text/plain'}
 };
 function get(name){
   var p=PROBES[name]||CANARY[name];
@@ -117,7 +117,7 @@ function get(name){
     var bin=atob(b64);
     var buf=new Uint8Array(bin.length);
     for(var i=0;i<bin.length;i++)buf[i]=bin.charCodeAt(i);
-    var blob=new Blob([buf],{type:'application/octet-stream'});
+    var blob=new Blob([buf],{type:(p.mime||'application/octet-stream')});
     var a=document.createElement('a');
     a.href=URL.createObjectURL(blob);
     a.download=name;

